@@ -1,128 +1,202 @@
 import React from 'react';
-import { MessageCircleMore, Mail, Send, Building2, User, Briefcase, ArrowRight, ChevronDown } from 'lucide-react';
+import { 
+  MessageCircleMore, 
+  Mail, 
+  Send, 
+  Building2, 
+  User, 
+  Briefcase, 
+  ArrowRight, 
+  ChevronDown 
+} from 'lucide-react';
 
-// --- SUBCOMPONENTE: INPUT ESTILIZADO ---
+/**
+ * CONFIGURACIÓN INTEGRAL DEL COMPONENTE
+ * Centraliza textos, enlaces y opciones para facilitar el mantenimiento.
+ */
+const CONTACT_CONFIG = {
+  info: {
+    badge: "Canales Directos",
+    title: {
+      main: "Lleve su empresa al ",
+      highlight: "siguiente nivel",
+      suffix: " tecnológico."
+    },
+    description: "Un asesor especializado analizará sus necesidades para diseñar una propuesta que maximice su rentabilidad.",
+  },
+  channels: [
+    {
+      label: "WhatsApp",
+      value: "+57 300 123 4567",
+      href: "tel:+573001234567",
+      icon: MessageCircleMore,
+      color: "bg-blue-600",
+      textColor: "text-blue-400"
+    },
+    {
+      label: "Correo Oficial",
+      value: "ventas@russoft.com",
+      href: "mailto:ventas@russoft.com",
+      icon: Mail,
+      color: "bg-slate-800",
+      textColor: "text-slate-400"
+    }
+  ],
+  form: {
+    title: "Solicitar Asesoría",
+    subtitle: "Respuesta garantizada en menos de 24 horas.",
+    buttonText: "Enviar Solicitud",
+    sectors: ["Comercio", "Servicios", "Producción / Fábrica", "Construcción", "Hotelería"]
+  }
+};
+
+/**
+ * SUBCOMPONENTE: FormInput
+ * Renderiza un campo de entrada con etiqueta e icono consistente.
+ */
 const FormInput = ({ label, icon: Icon, ...props }) => (
   <div className="space-y-1.5">
-    <label className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-500 ml-1">
+    <label className="ml-1 text-[10px] font-black uppercase tracking-widest text-slate-500 md:text-xs">
       {label}
     </label>
-    <div className="relative group">
-      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors">
+    <div className="group relative">
+      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within:text-blue-600">
         <Icon size={18} />
       </div>
       <input 
         {...props}
-        className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl md:rounded-2xl focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-600/5 outline-none transition-all text-slate-700 font-medium placeholder:text-slate-400 text-sm md:text-base"
+        className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-sm font-medium text-slate-700 outline-none transition-all placeholder:text-slate-400 focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-600/5 md:rounded-2xl md:text-base"
       />
     </div>
   </div>
 );
 
-const ContactoRedesign = () => {
-  const sectors = ["Comercio", "Servicios", "Producción / Fábrica", "Construcción", "Hotelería"];
+/**
+ * COMPONENTE PRINCIPAL: CTA
+ */
+const CTA = () => {
+  const { info, channels, form } = CONTACT_CONFIG;
 
   return (
-    <section id="contacto" className="py-12 md:py-24 bg-[#0a192f] relative overflow-hidden">
-      {/* Decoración de fondo optimizada */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
-        <div className="absolute -top-20 -left-20 w-64 h-64 bg-blue-600 rounded-full blur-[100px] md:blur-[120px]" />
-        <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-emerald-600 rounded-full blur-[100px] md:blur-[120px]" />
+    <section id="contacto" className="relative overflow-hidden bg-[#0a192f] py-12 md:py-24">
+      
+      {/* CAPA DE DECORACIÓN (Glow Effects) */}
+      <div className="pointer-events-none absolute left-0 top-0 h-full w-full opacity-20">
+        <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-blue-600 blur-[100px] md:blur-[120px]" />
+        <div className="absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-emerald-600 blur-[100px] md:blur-[120px]" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-16">
           
-          {/* Columna Izquierda: Info de Marca */}
-          <div className="lg:col-span-5 space-y-8 md:space-y-10">
+          {/* COLUMNA IZQUIERDA: INFORMACIÓN DE MARCA */}
+          <div className="space-y-8 md:space-y-10 lg:col-span-5">
             <div className="text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] mb-4 md:mb-6 border border-blue-500/20">
-                <MessageCircleMore size={12} /> Canales Directos
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 md:mb-6">
+                <MessageCircleMore size={12} /> {info.badge}
               </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tighter mb-4 md:mb-6">
-                Lleve su empresa al <span className="text-blue-500 italic block sm:inline">siguiente nivel</span> tecnológico.
+              <h2 className="mb-4 text-3xl font-black leading-tight tracking-tighter text-white md:mb-6 md:text-4xl lg:text-5xl">
+                {info.title.main} 
+                <span className="block italic text-blue-500 sm:inline">{info.title.highlight}</span>
+                {info.title.suffix}
               </h2>
-              <p className="text-slate-400 text-base md:text-lg font-medium max-w-xl mx-auto lg:mx-0">
-                Un asesor especializado analizará sus necesidades para diseñar una propuesta que maximice su rentabilidad.
+              <p className="mx-auto max-w-xl text-base font-medium text-slate-400 lg:mx-0 md:text-lg">
+                {info.description}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
-              <a href="tel:+573001234567" className="flex items-center gap-4 p-3 md:p-4 bg-white/5 border border-white/10 rounded-2xl md:rounded-[2rem] hover:bg-white/10 transition-all group">
-                <div className="bg-blue-600 p-3 md:p-4 rounded-xl md:rounded-2xl text-white shadow-lg shadow-blue-900/40 group-hover:scale-105 transition-transform">
-                  <MessageCircleMore size={20} className="md:w-6 md:h-6" />
-                </div>
-                <div className="overflow-hidden">
-                  <p className="text-[9px] md:text-[10px] font-black text-blue-400 uppercase tracking-widest truncate">WhatsApp</p>
-                  <p className="text-lg md:text-xl font-bold text-white truncate">+57 300 123 4567</p>
-                </div>
-              </a>
-
-              <a href="mailto:ventas@russoft.com" className="flex items-center gap-4 p-3 md:p-4 bg-white/5 border border-white/10 rounded-2xl md:rounded-[2rem] hover:bg-white/10 transition-all group">
-                <div className="bg-slate-800 p-3 md:p-4 rounded-xl md:rounded-2xl text-white group-hover:scale-105 transition-transform">
-                  <Mail size={20} className="md:w-6 md:h-6" />
-                </div>
-                <div className="overflow-hidden">
-                  <p className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest truncate">Correo Oficial</p>
-                  <p className="text-lg md:text-xl font-bold text-white truncate">ventas@russoft.com</p>
-                </div>
-              </a>
+            {/* BOTONES DE CONTACTO DIRECTO */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-1">
+              {channels.map((channel, idx) => (
+                <a 
+                  key={idx}
+                  href={channel.href} 
+                  className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-3 transition-all hover:bg-white/10 md:rounded-[2rem] md:p-4"
+                >
+                  <div className={`${channel.color} rounded-xl p-3 text-white shadow-lg transition-transform group-hover:scale-105 md:rounded-2xl md:p-4 shadow-blue-900/40`}>
+                    <channel.icon size={20} className="md:h-6 md:w-6" />
+                  </div>
+                  <div className="overflow-hidden">
+                    <p className={`text-[9px] font-black uppercase tracking-widest truncate ${channel.textColor} md:text-[10px]`}>
+                      {channel.label}
+                    </p>
+                    <p className="truncate text-lg font-bold text-white md:text-xl">
+                      {channel.value}
+                    </p>
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Columna Derecha: Formulario */}
+          {/* COLUMNA DERECHA: FORMULARIO */}
           <div className="lg:col-span-7">
-            <div className="bg-white rounded-[2rem] md:rounded-[3rem] p-6 md:p-10 lg:p-12 shadow-2xl relative">
-              {/* Icono flotante - Oculto en móviles muy pequeños para no estorbar */}
-              <div className="absolute -top-4 -right-4 w-14 h-14 md:w-20 md:h-20 bg-emerald-500 rounded-2xl md:rounded-3xl flex items-center justify-center text-white shadow-xl rotate-12 hidden xs:flex">
-                <Send size={24} className="md:w-8 md:h-8" />
+            <div className="relative rounded-[2rem] bg-white p-6 shadow-2xl md:rounded-[3rem] md:p-10 lg:p-12">
+              
+              {/* Icono flotante decorativo */}
+              <div className="absolute -right-4 -top-4 hidden h-14 w-14 rotate-12 items-center justify-center rounded-2xl bg-emerald-500 text-white shadow-xl xs:flex md:h-20 md:w-20 md:rounded-3xl">
+                <Send size={24} className="md:h-8 md:w-8" />
               </div>
 
-              <div className="mb-8 md:mb-10 text-center sm:text-left">
-                <h3 className="text-2xl md:text-3xl font-black text-[#0a192f] tracking-tighter mb-2">Solicitar Asesoría</h3>
-                <p className="text-slate-500 font-medium text-sm md:text-base">Respuesta garantizada en menos de 24 horas.</p>
+              <div className="mb-8 text-center sm:text-left md:mb-10">
+                <h3 className="mb-2 text-2xl font-black tracking-tighter text-[#0a192f] md:text-3xl">
+                  {form.title}
+                </h3>
+                <p className="text-sm font-medium text-slate-500 md:text-base">
+                  {form.subtitle}
+                </p>
               </div>
 
-              <form className="space-y-4 md:space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+              <form className="space-y-4 md:space-y-6" onSubmit={(e) => e.preventDefault()}>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6">
                   <FormInput label="Nombre Completo" icon={User} placeholder="Ej. Juan Pérez" type="text" />
                   <FormInput label="Empresa" icon={Building2} placeholder="Nombre de su compañía" type="text" />
                 </div>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6">
                   <FormInput label="WhatsApp / Celular" icon={MessageCircleMore} placeholder="+57 300..." type="tel" />
+                  
+                  {/* Selector de Sector */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Sector</label>
-                    <div className="relative group">
-                      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-focus-within:text-blue-600 transition-colors">
+                    <label className="ml-1 text-[10px] font-black uppercase tracking-widest text-slate-500 md:text-xs">
+                      Sector
+                    </label>
+                    <div className="group relative">
+                      <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within:text-blue-600">
                         <Briefcase size={18} />
                       </div>
-                      <select className="w-full pl-11 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl md:rounded-2xl focus:bg-white focus:border-blue-600 outline-none appearance-none text-slate-700 font-medium text-sm md:text-base transition-all">
+                      <select className="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-10 text-sm font-medium text-slate-700 outline-none transition-all focus:border-blue-600 focus:bg-white md:rounded-2xl md:text-base">
                         <option>Seleccionar sector...</option>
-                        {sectors.map((s, i) => <option key={i} value={s}>{s}</option>)}
+                        {form.sectors.map((s, i) => <option key={i} value={s}>{s}</option>)}
                       </select>
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                      <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
                         <ChevronDown size={18} />
                       </div>
                     </div>
                   </div>
                 </div>
 
+                {/* Textarea de Mensaje */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-500 ml-1">¿Cómo podemos ayudarle?</label>
+                  <label className="ml-1 text-[10px] font-black uppercase tracking-widest text-slate-500 md:text-xs">
+                    ¿Cómo podemos ayudarle?
+                  </label>
                   <textarea 
                     rows={3} 
                     placeholder="Cuéntenos sobre su proyecto..."
-                    className="w-full p-4 md:p-6 bg-slate-50 border border-slate-200 rounded-xl md:rounded-[2rem] focus:bg-white focus:border-blue-600 outline-none transition-all text-slate-700 font-medium text-sm md:text-base resize-none"
-                  ></textarea>
+                    className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm font-medium text-slate-700 outline-none transition-all focus:border-blue-600 focus:bg-white md:rounded-[2rem] md:p-6 md:text-base"
+                  />
                 </div>
 
+                {/* Botón de Envío */}
                 <button 
                   type="submit" 
-                  className="w-full bg-[#0a192f] hover:bg-blue-700 text-white font-black py-4 md:py-5 rounded-xl md:rounded-2xl transition-all shadow-xl flex items-center justify-center gap-3 group active:scale-[0.98]"
+                  className="group flex w-full items-center justify-center gap-3 rounded-xl bg-[#0a192f] py-4 font-black text-white shadow-xl transition-all hover:bg-blue-700 active:scale-[0.98] md:rounded-2xl md:py-5"
                 >
-                  <span className="uppercase tracking-widest text-xs md:text-sm">Enviar Solicitud</span>
-                  <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
+                  <span className="text-xs uppercase tracking-widest md:text-sm">
+                    {form.buttonText}
+                  </span>
+                  <ArrowRight size={18} className="transition-transform group-hover:translate-x-2" />
                 </button>
               </form>
             </div>
@@ -134,4 +208,4 @@ const ContactoRedesign = () => {
   );
 };
 
-export default ContactoRedesign;
+export default CTA;

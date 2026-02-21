@@ -1,87 +1,105 @@
 import React from 'react';
 import { XCircle, CheckCircle2, ArrowRight, AlertTriangle, ShieldCheck } from 'lucide-react';
 
-const Solucion = () => {
-  // --- CONFIGURACIÓN DE CONTENIDO ---
-  const config = {
-    problem: {
-      tag: "Estado Actual",
-      title: "¿Tu empresa sufre de caos administrativo?",
-      items: [
-        { text: "Procesos manuales propensos a errores en Excel.", icon: <XCircle className="text-red-400 w-5 h-5" /> },
-        { text: "Inventarios descuadrados y pérdidas desconocidas.", icon: <XCircle className="text-red-400 w-5 h-5" /> },
-        { text: "Facturación desconectada de la contabilidad.", icon: <XCircle className="text-red-400 w-5 h-5" /> },
-        { text: "Falta de reportes reales para tomar decisiones.", icon: <XCircle className="text-red-400 w-5 h-5" /> }
-      ]
-    },
-    solution: {
-      tag: "La Solución Russoft",
-      title: "Control total y centralizado",
-      features: [
-        "Facturación Electrónica", "POS & Ventas", 
-        "Inventarios Reales", "Contabilidad NIIF", 
-        "Nómina", "Producción", 
-        "Compras", "Cartera"
-      ]
-    }
-  };
+/**
+ * CONFIGURACIÓN DE CONTENIDO
+ * Permite editar el copywriting del problema y la solución en un solo lugar.
+ */
+const SOLUCION_CONFIG = {
+  problem: {
+    tag: "Estado Actual",
+    title: "¿Tu empresa sufre de caos administrativo?",
+    items: [
+      { text: "Procesos manuales propensos a errores en Excel." },
+      { text: "Inventarios descuadrados y pérdidas desconocidas." },
+      { text: "Facturación desconectada de la contabilidad." },
+      { text: "Falta de reportes reales para tomar decisiones." }
+    ]
+  },
+  solution: {
+    tag: "La Solución Russoft",
+    title: "Control total y centralizado",
+    features: [
+      "Facturación Electrónica", "POS & Ventas", 
+      "Inventarios Reales", "Contabilidad NIIF", 
+      "Nómina", "Producción", 
+      "Compras", "Cartera"
+    ]
+  }
+};
+
+/**
+ * COMPONENTE: Solution
+ * Presenta el contraste entre los dolores del cliente y los beneficios del ERP.
+ */
+const Solution = () => {
+  const { problem, solution } = SOLUCION_CONFIG;
 
   return (
-    <section id="solucion" className="py-24 bg-[#0a192f] overflow-hidden relative">
-      {/* Decoración sutil de fondo para mantener coherencia con el Hero */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
+    <section id="solucion" className="relative overflow-hidden bg-[#0a192f] py-24">
+      {/* Línea decorativa superior para coherencia visual */}
+      <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
       
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-24">
           
-          {/* Columna: PROBLEMA (Contraste con tipografía clara y bordes suaves) */}
-          <div className="relative p-8 lg:p-0">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold uppercase tracking-widest mb-6">
+          {/* COLUMNA IZQUIERDA: EL PROBLEMA (Lado Oscuro) */}
+          <div className="relative">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-md border border-red-500/20 bg-red-500/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-red-400">
               <AlertTriangle size={14} />
-              {config.problem.tag}
+              {problem.tag}
             </div>
             
-            <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight mb-8">
-              {config.problem.title}
+            <h2 className="mb-8 text-3xl font-black leading-tight text-white lg:text-4xl">
+              {problem.title}
             </h2>
 
             <ul className="space-y-5">
-              {config.problem.items.map((item, idx) => (
-                <li key={idx} className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 transition-colors group">
+              {problem.items.map((item, idx) => (
+                <li 
+                  key={idx} 
+                  className="group flex items-center gap-4 rounded-xl border border-white/5 bg-white/5 p-4 transition-colors hover:border-white/10"
+                >
                   <div className="flex-shrink-0 transition-transform group-hover:scale-110">
-                    {item.icon}
+                    <XCircle className="h-5 w-5 text-red-400" />
                   </div>
-                  <span className="text-slate-300 font-medium">{item.text}</span>
+                  <span className="font-medium text-slate-300">
+                    {item.text}
+                  </span>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Columna: SOLUCIÓN (Contraste alto: Card Blanca / "Clean Tech") */}
+          {/* COLUMNA DERECHA: LA SOLUCIÓN (Lado Claro / Clean Tech) */}
           <div className="relative">
-            {/* Glow azul detrás de la card blanca */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-[2.5rem] blur opacity-20"></div>
+            {/* Resplandor perimetral para destacar la "salvación" */}
+            <div className="absolute -inset-1 rounded-[2.5rem] bg-gradient-to-r from-blue-600 to-cyan-500 opacity-20 blur"></div>
             
-            <div className="relative bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-2xl overflow-hidden group">
-              {/* Marca de agua / Icono de fondo decorativo */}
-              <ShieldCheck className="absolute -bottom-10 -right-10 w-40 h-40 text-blue-50 opacity-[0.03] -rotate-12" />
+            <div className="relative overflow-hidden rounded-[2.5rem] bg-white p-8 shadow-2xl lg:p-12">
+              {/* Marca de agua decorativa */}
+              <ShieldCheck className="absolute -bottom-10 -right-10 h-40 w-40 -rotate-12 text-blue-50 opacity-10" />
 
               <div className="relative z-10">
-                <span className="inline-block px-3 py-1 rounded-md bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-widest mb-4">
-                  {config.solution.tag}
+                <span className="mb-4 inline-block rounded-md bg-blue-100 px-3 py-1 text-xs font-bold uppercase tracking-widest text-blue-700">
+                  {solution.tag}
                 </span>
                 
-                <h3 className="text-2xl lg:text-3xl font-extrabold text-slate-900 mb-8">
-                  {config.solution.title}
+                <h3 className="mb-8 text-2xl font-extrabold text-slate-900 lg:text-3xl">
+                  {solution.title}
                 </h3>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {config.solution.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-center gap-3 p-3 rounded-xl hover:bg-blue-50 transition-colors group/item">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-200 group-hover/item:scale-110 transition-transform">
-                        <CheckCircle2 className="text-white w-5 h-5" />
+                {/* Grid de funcionalidades de la solución */}
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  {solution.features.map((feature, idx) => (
+                    <div 
+                      key={idx} 
+                      className="group/item flex items-center gap-3 rounded-xl p-3 transition-colors hover:bg-blue-50"
+                    >
+                      <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-blue-600 shadow-lg shadow-blue-200 transition-transform group-hover/item:scale-110">
+                        <CheckCircle2 className="h-5 w-5 text-white" />
                       </div>
-                      <span className="text-slate-700 font-bold text-sm tracking-tight">
+                      <span className="text-sm font-bold tracking-tight text-slate-700">
                         {feature}
                       </span>
                     </div>
@@ -91,10 +109,10 @@ const Solucion = () => {
                 <div className="mt-10">
                   <a 
                     href="#contacto" 
-                    className="flex items-center justify-center gap-3 w-full py-4 bg-[#0a192f] text-white rounded-2xl font-bold hover:bg-blue-900 transition-all shadow-xl shadow-blue-900/20 group"
+                    className="group flex w-full items-center justify-center gap-3 rounded-2xl bg-[#0a192f] py-4 font-bold text-white shadow-xl shadow-blue-900/20 transition-all hover:bg-blue-900"
                   >
                     Empieza la transformación
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </a>
                 </div>
               </div>
@@ -107,4 +125,4 @@ const Solucion = () => {
   );
 };
 
-export default Solucion;
+export default Solution;

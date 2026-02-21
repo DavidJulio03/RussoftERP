@@ -8,10 +8,10 @@ import Solution from '../components/Solution';
 import Modules from '../components/Modules';
 import Sectores from '../components/Sectores';
 import Trust from '../components/Trust';
-import Planes from '../components/Pricing';
+import Pricing from '../components/Pricing';
 import Russoft from '../components/Russoft';
-import ContactoRedesign from '../components/CTA';
-import FooterRedesign from '../../shared/components/Footer';
+import CTA from '../components/CTA';
+import Footer from '../../shared/components/Footer';
 
 
 
@@ -46,16 +46,16 @@ const WhatsAppFloat = () => (
       <Trust></Trust>
 
       {/* --- PLANS --- */}
-      <Planes></Planes>
+      <Pricing></Pricing>
 
       {/* --- ABOUT US --- */}
       <Russoft></Russoft>
 
       {/* --- CONTACT & CTA --- */}
-      <ContactoRedesign></ContactoRedesign>
+      <CTA></CTA>
 
       {/* --- FOOTER --- */}
-      <FooterRedesign></FooterRedesign>
+      <Footer></Footer>
 
       {/*WHATSAPP*/}
       <WhatsAppFloat />

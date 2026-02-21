@@ -1,12 +1,12 @@
 import React, { useState, useRef } from 'react';
-import { LayoutGrid, ChevronRight, Briefcase } from 'lucide-react';
+import { Briefcase } from 'lucide-react';
 import SectorDetail from './SectorDetail';
 
-const Sectores = () => {
-  const [activeSector, setActiveSector] = useState(null);
-  const detailRef = useRef(null);
-
-  const config = {
+/**
+ * CONFIGURACIÓN INTEGRAL DE SECTORES
+ * Centraliza la metadata y contenidos de los módulos especializados.
+ */
+const SECTORES_CONFIG = {
   header: {
     tag: "Experticia Sectorial",
     title: "Soluciones a tu Medida",
@@ -135,12 +135,26 @@ const Sectores = () => {
   ]
 };
 
+/**
+ * COMPONENTE PRINCIPAL: Sectores
+ * Orquesta la navegación entre los distintos nichos de mercado atendidos.
+ */
+const Sectores = () => {
+  const [activeSector, setActiveSector] = useState(null);
+  const detailRef = useRef(null);
+  const { header, sectors } = SECTORES_CONFIG;
+
+  /**
+   * Maneja el clic en un sector, actualiza el estado y realiza scroll suave.
+   */
   const handleSectorClick = (sector) => {
     setActiveSector(sector);
-    // En móvil, damos un respiro antes del scroll para que la animación de la card se vea
+    
+    // Tiempo de espera para asegurar que el componente SectorDetail se renderice antes del scroll
     setTimeout(() => {
-      const offset = 80; // Compensación para el Navbar fijo
+      const offset = 80; // Ajuste para el header fijo
       const elementPosition = detailRef.current?.getBoundingClientRect().top + window.pageYOffset;
+      
       window.scrollTo({
         top: elementPosition - offset,
         behavior: 'smooth'
@@ -149,38 +163,50 @@ const Sectores = () => {
   };
 
   return (
-    <section id="sectores" className="py-16 lg:py-24 bg-[#0a192f] relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="sectores" className="relative overflow-hidden bg-[#0a192f] py-16 lg:py-24">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
-        <div className="text-center mb-10 lg:mb-16">
-          <span className="text-blue-400 font-bold text-[10px] lg:text-xs uppercase tracking-[0.3em] block mb-3">
-            {config.header.tag}
+        {/* Encabezado de Sección */}
+        <div className="mb-10 text-center lg:mb-16">
+          <span className="mb-3 block text-[10px] font-bold uppercase tracking-[0.3em] text-blue-400 lg:text-xs">
+            {header.tag}
           </span>
-          <h2 className="text-3xl lg:text-5xl font-black text-white tracking-tight">
-            {config.header.title}
+          <h2 className="text-3xl font-black tracking-tight text-white lg:text-5xl">
+            {header.title}
           </h2>
         </div>
 
-        {/* Grid: 2 columnas en móviles pequeños para evitar scroll infinito */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mb-12">
-          {config.sectors.map((sector) => (
-            <button
-              key={sector.id}
-              onClick={() => handleSectorClick(sector)}
-              className={`group flex flex-col items-start p-4 lg:p-6 rounded-xl lg:rounded-2xl border transition-all duration-300 text-left active:scale-95 ${
-                activeSector?.id === sector.id 
-                ? 'bg-blue-600 border-blue-400 shadow-xl' 
-                : 'bg-white/5 border-white/10'
-              }`}
-            >
-              <Briefcase className={`mb-3 w-5 h-5 lg:w-6 lg:h-6 ${activeSector?.id === sector.id ? 'text-white' : 'text-blue-400'}`} />
-              <span className={`text-xs lg:text-base font-bold leading-tight ${activeSector?.id === sector.id ? 'text-white' : 'text-slate-200'}`}>
-                {sector.name}
-              </span>
-            </button>
-          ))}
+        {/* Grid de Selectores: 2 columnas en móvil, 4 en desktop */}
+        <div className="mb-12 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
+          {sectors.map((sector) => {
+            const isActive = activeSector?.id === sector.id;
+            
+            return (
+              <button
+                key={sector.id}
+                onClick={() => handleSectorClick(sector)}
+                className={`group flex flex-col items-start rounded-xl border p-4 transition-all duration-300 text-left active:scale-95 lg:rounded-2xl lg:p-6 ${
+                  isActive 
+                    ? 'bg-blue-600 border-blue-400 shadow-xl' 
+                    : 'bg-white/5 border-white/10 hover:border-white/30'
+                }`}
+              >
+                <Briefcase 
+                  className={`mb-3 h-5 w-5 lg:h-6 lg:w-6 ${
+                    isActive ? 'text-white' : 'text-blue-400'
+                  }`} 
+                />
+                <span className={`text-xs font-bold leading-tight lg:text-base ${
+                  isActive ? 'text-white' : 'text-slate-200'
+                }`}>
+                  {sector.name}
+                </span>
+              </button>
+            );
+          })}
         </div>
 
+        {/* Visualización del Detalle Seleccionado */}
         <div ref={detailRef} className="scroll-mt-24">
           {activeSector && (
             <SectorDetail 
@@ -189,6 +215,7 @@ const Sectores = () => {
             />
           )}
         </div>
+
       </div>
     </section>
   );

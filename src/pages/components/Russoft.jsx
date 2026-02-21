@@ -1,77 +1,120 @@
 import React from 'react';
 import { ArrowRight, History, Sparkles } from 'lucide-react';
 
-// --- SUBCOMPONENTE: BOTÓN DE NAVEGACIÓN (Optimizado para Touch) ---
-const HistoryCTA = ({ href = "/historia" }) => (
+/**
+ * CONFIGURACIÓN DE CONTENIDO: "SOBRE NOSOTROS"
+ * Centraliza imágenes, textos y etiquetas de marca.
+ */
+const SOBRE_CONFIG = {
+  header: {
+    tag: "Desde 1996",
+    title: {
+      main: "Soluciones que ",
+      highlight: "transforman",
+      suffix: " empresas."
+    }
+  },
+  content: {
+    lead: "En Russoft, no solo programamos; diseñamos el motor tecnológico que impulsa el crecimiento de más de 1,000 compañías en Colombia.",
+    body: "Nuestra historia es una de constante evolución y pasión por la disciplina. Hemos convertido la complejidad contable y administrativa en procesos simples, seguros y altamente rentables.",
+    tags: ["Innovación", "Compromiso", "Ética"]
+  },
+  image: {
+    url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80",
+    alt: "Equipo Russoft trabajando en soluciones ERP"
+  },
+  cta: {
+    text: "Conoce nuestra trayectoria",
+    href: "/nuestra-historia"
+  }
+};
+
+/**
+ * SUBCOMPONENTE: HistoryCTA
+ * Botón de navegación optimizado con feedback visual al hacer hover.
+ */
+const HistoryCTA = ({ href, text }) => (
   <a 
     href={href}
-    className="inline-flex items-center gap-4 p-1 pr-6 bg-[#0a192f] rounded-2xl group transition-all hover:bg-blue-700 w-full sm:w-auto"
+    className="group inline-flex w-full items-center gap-4 rounded-2xl bg-[#0a192f] p-1 pr-6 transition-all hover:bg-blue-700 sm:w-auto"
   >
-    <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center text-white group-hover:scale-95 transition-transform">
+    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-white transition-transform group-hover:scale-95">
       <History size={22} />
     </div>
-    <span className="text-white font-bold text-sm tracking-tight">
-      Conoce nuestra trayectoria
+    <span className="text-sm font-bold tracking-tight text-white">
+      {text}
     </span>
-    <ArrowRight size={18} className="text-blue-400 ml-auto group-hover:translate-x-1 transition-transform" />
+    <ArrowRight size={18} className="ml-auto text-blue-400 transition-transform group-hover:translate-x-1" />
   </a>
 );
 
-// --- COMPONENTE PRINCIPAL ---
-const SobreRussoftSimple = () => {
+/**
+ * COMPONENTE PRINCIPAL: Russoft
+ */
+const Russoft = () => {
+  const { header, content, image, cta } = SOBRE_CONFIG;
+
   return (
-    <section id="nosotros" className="py-16 lg:py-28 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section id="nosotros" className="relative overflow-hidden bg-white py-16 lg:py-28">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
         
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+        <div className="flex flex-col items-center gap-12 lg:flex-row lg:gap-20">
           
-          {/* Imagen: Orden de lectura 2 en móvil, 1 en desktop para balance */}
-          <div className="w-full lg:w-5/12 order-2 lg:order-1">
+          {/* BLOQUE DE IMAGEN: Prioridad visual con decoraciones */}
+          <div className="order-2 w-full lg:order-1 lg:w-5/12">
             <div className="relative">
-              <div className="absolute -inset-4 bg-blue-50 rounded-[3rem] -rotate-2" />
-              <div className="relative h-[350px] lg:h-[500px] rounded-[2.5rem] overflow-hidden shadow-2xl">
+              {/* Elemento decorativo de fondo (placa rotada) */}
+              <div className="absolute -inset-4 -rotate-2 rounded-[3rem] bg-blue-50" />
+              
+              <div className="relative h-[350px] overflow-hidden rounded-[2.5rem] shadow-2xl lg:h-[500px]">
                 <img 
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80" 
-                  alt="Equipo Russoft" 
-                  className="w-full h-full object-cover"
+                  src={image.url} 
+                  alt={image.alt} 
+                  className="h-full w-full object-cover"
                 />
               </div>
             </div>
           </div>
 
-          {/* Contenido: Orden de lectura 1 en móvil */}
-          <div className="w-full lg:w-7/12 order-1 lg:order-2 space-y-6 lg:space-y-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-widest">
-              <Sparkles size={12} /> Desde 1996
+          {/* BLOQUE DE TEXTO: Narrativa de marca */}
+          <div className="order-1 w-full space-y-6 lg:order-2 lg:w-7/12 lg:space-y-8">
+            
+            {/* Badge de Antigüedad */}
+            <div className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-blue-600">
+              <Sparkles size={12} /> {header.tag}
             </div>
 
-            <h2 className="text-4xl lg:text-6xl font-black text-[#0a192f] leading-[1.1] tracking-tighter">
-              Soluciones que <br />
-              <span className="text-blue-600">transforman</span> empresas.
+            <h2 className="text-4xl font-black leading-[1.1] tracking-tighter text-[#0a192f] lg:text-6xl">
+              {header.title.main} <br />
+              <span className="text-blue-600">{header.title.highlight}</span>
+              {header.title.suffix}
             </h2>
 
             <div className="space-y-4">
-              <p className="text-lg lg:text-xl text-slate-600 font-medium leading-relaxed">
-                En Russoft, no solo programamos; diseñamos el motor tecnológico que impulsa el crecimiento de más de 1,000 compañías en Colombia.
+              <p className="text-lg font-medium leading-relaxed text-slate-600 lg:text-xl">
+                {content.lead}
               </p>
               
-              <p className="text-slate-500 leading-relaxed text-sm lg:text-base">
-                Nuestra historia es una de constante evolución y pasión por la disciplina. Hemos convertido la complejidad contable y administrativa en procesos simples, seguros y altamente rentables.
+              <p className="text-sm leading-relaxed text-slate-500 lg:text-base">
+                {content.body}
               </p>
             </div>
 
-            {/* Valores en formato simple (Chips) */}
+            {/* Chips de Valores Corporativos */}
             <div className="flex flex-wrap gap-2 pt-2">
-              {["Innovación", "Compromiso", "Ética"].map((tag) => (
-                <span key={tag} className="px-3 py-1 bg-slate-100 text-slate-500 text-[10px] font-bold uppercase rounded-md">
+              {content.tags.map((tag) => (
+                <span 
+                  key={tag} 
+                  className="rounded-md bg-slate-100 px-3 py-1 text-[10px] font-bold uppercase text-slate-500"
+                >
                   {tag}
                 </span>
               ))}
             </div>
 
-            {/* CTA Final */}
+            {/* Call to Action Final */}
             <div className="pt-6">
-              <HistoryCTA href="/nuestra-historia" />
+              <HistoryCTA href={cta.href} text={cta.text} />
             </div>
           </div>
 
@@ -81,4 +124,4 @@ const SobreRussoftSimple = () => {
   );
 };
 
-export default SobreRussoftSimple;
+export default Russoft;
